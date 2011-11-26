@@ -58,8 +58,8 @@ function! s:interface.authorization() dict
   if len(self.token) > 0
     return ''
   endif
-  let self.email = input('email:')
-  let password = inputsecret('password:')
+  let self.email = exists("g:SimplenoteUsername") ? g:SimplenoteUsername : input('email:')
+  let password = exists("g:SimplenotePassword") ? g:SimplenotePassword : inputsecret('password:')
   let creds = base64#b64encode(printf('email=%s&password=%s', self.email, password))
   let res = http#post('https://simple-note.appspot.com/api/login', creds)
   if res.header[0] == 'HTTP/1.1 200 OK'
