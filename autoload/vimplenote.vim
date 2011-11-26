@@ -39,7 +39,11 @@ endfunction
 function! s:interface.open_scratch_buffer(name)
   let bn = bufnr(a:name)
   if bn == -1
-    silent noautocmd exe "new " . a:name
+    if bufname('%') !~ 'VimpleNote'
+      silent noautocmd exe "tabnew " . a:name
+    else
+      silent noautocmd exe "new " . a:name
+    endif
   else
     let bw = bufwinnr(bn)
     if bw != -1
